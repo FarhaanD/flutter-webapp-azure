@@ -18,10 +18,10 @@ Before you begin, ensure you have the following:
 
 ### Step 1: Clone the Repository
 
-First, obtain the necessary Terraform configurations by cloning the repository. Replace `your-repository-url` with the actual URL of the repository:
+First, obtain the necessary Terraform configurations by cloning the repository.
 
 ```type:Generated,lang:Bash,path:,lines:0-0
-git clone your-repository-url
+git clone https://github.com/nkosinathi-sola/flutter-webapp-azure.git
 cd flutter-webapp-azure
 ```
 
