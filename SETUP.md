@@ -22,7 +22,7 @@ First, obtain the necessary Terraform configurations by cloning the repository.
 
 ```type:Generated,lang:Bash,path:,lines:0-0
 git clone https://github.com/nkosinathi-sola/flutter-webapp-azure.git
-cd flutter-webapp-azure
+cd pk-flutter-webapp-azure
 ```
 
 

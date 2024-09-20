@@ -30,7 +30,7 @@ resource "azurerm_container_registry" "acr" {
   name                = var.acr_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
-  sku                 = "Basic"
+  sku                 = var.acr_sku
   admin_enabled       = true
 }
 
@@ -38,12 +38,12 @@ resource "azurerm_app_service_plan" "asp" {
   name                = var.app_service_plan_name
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  kind                = "Linux"
+  kind                = var.app_service_plan_kind
   reserved            = true
 
   sku {
-    tier = "Basic"
-    size = "B1"
+    tier = var.app_service_plan_tier
+    size = var.app_service_plan_size
   }
 }
 
@@ -61,11 +61,19 @@ resource "azurerm_app_service" "webapp" {
   }
 
   site_config {
-    linux_fx_version = "DOCKER|${azurerm_container_registry.acr.login_server}/flutter-web:latest"
-    always_on        = "true"
+    linux_fx_version = "DOCKER|${azurerm_container_registry.acr.login_server}/pk-flutter-web:${var.environment}"
+    always_on        = var.app_service_always_on
   }
 
   identity {
     type = "SystemAssigned"
   }
+}
+
+output "webapp_url" {
+  value = azurerm_app_service.webapp.default_site_hostname
+}
+
+output "acr_login_server" {
+  value = azurerm_container_registry.acr.login_server
 }

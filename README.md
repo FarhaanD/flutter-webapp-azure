@@ -1,3 +1,11 @@
+you dont have any instructions how to run this terraform
+why you putted it in the setupmd
+
+store your tfstate in a blob storage or something secure
+this way we can repeat the set up and its left intact
+
+your resources should always following good naming convention standards
+company abb = sn , ts , fs, cb, tl etc
 # Architecture Overview of the Flutter Web App on Azure
 
 ## Introduction
