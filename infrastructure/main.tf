@@ -11,15 +11,14 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
 }
 
 module "network" {
   source              = "../network"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   vnet_name           = var.vnet_name
   vnet_address_space  = var.vnet_address_space
   subnet_name         = var.subnet_name
@@ -28,16 +27,16 @@ module "network" {
 
 resource "azurerm_container_registry" "acr" {
   name                = var.acr_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   sku                 = var.acr_sku
   admin_enabled       = true
 }
 
 resource "azurerm_app_service_plan" "asp" {
   name                = var.app_service_plan_name
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   kind                = var.app_service_plan_kind
   reserved            = true
 
@@ -49,8 +48,8 @@ resource "azurerm_app_service_plan" "asp" {
 
 resource "azurerm_app_service" "webapp" {
   name                = var.app_service_name
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.asp.id
 
   app_settings = {
